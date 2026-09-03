@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppointmentsRouteImport } from './routes/appointments'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const InventoryRoute = InventoryRouteImport.update({
   path: '/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarketingRoute = MarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/appointments': typeof AppointmentsRoute
   '/chat': typeof ChatRoute
   '/inventory': typeof InventoryRoute
+  '/marketing': typeof MarketingRoute
   '/reviews': typeof ReviewsRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/appointments': typeof AppointmentsRoute
   '/chat': typeof ChatRoute
   '/inventory': typeof InventoryRoute
+  '/marketing': typeof MarketingRoute
   '/reviews': typeof ReviewsRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,23 @@ export interface FileRoutesById {
   '/appointments': typeof AppointmentsRoute
   '/chat': typeof ChatRoute
   '/inventory': typeof InventoryRoute
+  '/marketing': typeof MarketingRoute
   '/reviews': typeof ReviewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/appointments' | '/chat' | '/inventory' | '/reviews'
+  fullPaths:
+    '/' | '/appointments' | '/chat' | '/inventory' | '/marketing' | '/reviews'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/appointments' | '/chat' | '/inventory' | '/reviews'
-  id: '__root__' | '/' | '/appointments' | '/chat' | '/inventory' | '/reviews'
+  to: '/' | '/appointments' | '/chat' | '/inventory' | '/marketing' | '/reviews'
+  id:
+    | '__root__'
+    | '/'
+    | '/appointments'
+    | '/chat'
+    | '/inventory'
+    | '/marketing'
+    | '/reviews'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +93,7 @@ export interface RootRouteChildren {
   AppointmentsRoute: typeof AppointmentsRoute
   ChatRoute: typeof ChatRoute
   InventoryRoute: typeof InventoryRoute
+  MarketingRoute: typeof MarketingRoute
   ReviewsRoute: typeof ReviewsRoute
 }
 
@@ -109,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InventoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/marketing': {
+      id: '/marketing'
+      path: '/marketing'
+      fullPath: '/marketing'
+      preLoaderRoute: typeof MarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -124,6 +149,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppointmentsRoute: AppointmentsRoute,
   ChatRoute: ChatRoute,
   InventoryRoute: InventoryRoute,
+  MarketingRoute: MarketingRoute,
   ReviewsRoute: ReviewsRoute,
 }
 export const routeTree = rootRouteImport
