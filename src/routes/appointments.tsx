@@ -28,8 +28,8 @@ function Appointments() {
   const today = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({
     client: "",
-    service: SERVICES[0],
-    stylist: stylists[0],
+    service: SERVICES[0] as string,
+    stylist: stylists[0] as string,
     date: today,
     time: "10:00",
     durationMin: 60,
@@ -41,11 +41,17 @@ function Appointments() {
   }));
 
   const submit = () => {
-    if (!form.client.trim()) return toast.error("Add a client name first.");
+    if (!form.client.trim()) {
+      toast.error("Add a client name first.");
+      return;
+    }
     const clash = appointments.some(
       (a) => a.stylist === form.stylist && a.date === form.date && a.time === form.time && a.status !== "cancelled",
     );
-    if (clash) return toast.error(`${form.stylist} already has a booking at ${form.time}.`);
+    if (clash) {
+      toast.error(`${form.stylist} already has a booking at ${form.time}.`);
+      return;
+    }
     addAppointment({ ...form, status: "confirmed" });
     toast.success(`Booked ${form.client} · confirmation sent`);
     setForm({ ...form, client: "" });
